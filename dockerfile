@@ -9,7 +9,7 @@ WORKDIR /var/www/html
 # Cài đặt các gói phụ thuộc
 RUN apt-get update && \
     apt-get install -y zip unzip libzip-dev && \
-    docker-php-ext-install zip
+    docker-php-ext-install zip pdo_mysql
 
 # Cài đặt Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
