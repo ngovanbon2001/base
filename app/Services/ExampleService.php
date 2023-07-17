@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Repositories\TestRepositoryEloquent;
-use App\Service\Contract\IExample;
+use App\Service\Contracts\IExample;
 
 class ExampleService implements IExample
 {

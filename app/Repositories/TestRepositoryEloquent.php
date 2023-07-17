@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\BaseRepository as RepositoriesBaseRepository;
-use App\Repositories\Contract\TestRepository;
+use App\Repositories\Contracts\TestRepository;
 
 /**
  * Class TestRepositoryEloquent.

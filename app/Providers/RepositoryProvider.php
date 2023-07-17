@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\Contract\TestRepository;
+use App\Repositories\Contracts\TestRepository;
 use App\Repositories\TestRepositoryEloquent;
-use App\Service\Contract\IExample;
+use App\Service\Contracts\IExample;
 use App\Service\ExampleService;
 use Illuminate\Support\ServiceProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Contract;
+namespace App\Repositories\Contracts;
 
 interface RepositoryInterface extends \Prettus\Repository\Contracts\RepositoryInterface
 {

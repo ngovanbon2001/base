@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use App\Repositories\Contract\RepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Exceptions\RepositoryException;
