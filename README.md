@@ -70,6 +70,7 @@ docker exec -it vaccination-vaccination-1 bash
 docker exec -it vaccination-vaccination-1 php artisan
 
 docker exec -it vaccination-vaccination-1 mysql -u root -p
+SHOW DATABASES;
 CREATE DATABASE chatgpt_clone;
 
 DB_CONNECTION=mysql
