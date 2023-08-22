@@ -65,3 +65,13 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 docker exec -it vaccination-vaccination-1 bash
 docker exec -it vaccination-vaccination-1 php artisan
+
+docker exec -it vaccination-vaccination-1 mysql -u root -p
+CREATE DATABASE chatgpt_clone;
+
+DB_CONNECTION=mysql
+DB_HOST=laravel-base-code-082023-mysql-1
+DB_PORT=3306
+DB_DATABASE=chatgpt_clone
+DB_USERNAME=root
+DB_PASSWORD=123456
