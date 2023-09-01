@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('count_requests');
 
 Route::get('/test', function () {
     return "AAAAAA";
+});
+
+Route::get('test3', function () {
+    dd(Redis::get('request_count'));
 });
