@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AuthApi\LoginController;
 use App\Http\Controllers\ExampleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
