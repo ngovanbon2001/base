@@ -1,5 +1,14 @@
 <?php
 
+use App\Constants\Common;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+
 if (!function_exists('handleImage')) {
     function handleImage($fileImage): string
     {
@@ -24,8 +33,8 @@ if (!function_exists('test')) {
 
 function removeSession($session)
 {
-    if (\Session::has($session)) {
-        \Session::forget($session);
+    if (Session::has($session)) {
+        Session::forget($session);
     }
     return true;
 }
@@ -60,7 +69,7 @@ function checkRecordExist($table_list, $column_name, $id)
 {
     if (count($table_list) > 0) {
         foreach ($table_list as $table) {
-            $check_data = \DB::table($table)->where($column_name, $id)->count();
+            $check_data = DB::table($table)->where($column_name, $id)->count();
             if ($check_data > 0) {
                 return false;
             }
@@ -89,7 +98,7 @@ function storeMediaFile($model, $file, $name)
 // Model file get by storage by spatie media library
 function getSingleMedia($model, $collection = 'image_icon', $skip = true)
 {
-    if (!\Auth::check() && $skip) {
+    if (!Auth::check() && $skip) {
         return asset('images/avatars/01.png');
     }
     if ($model !== null) {
@@ -123,7 +132,7 @@ function getFileExistsCheck($media)
             $mediaCondition = file_exists($media->getPath());
         } else {
             $mediaCondition =
-                \Storage::disk($media->disk)->exists($media->getPath());
+                Storage::disk($media->disk)->exists($media->getPath());
         }
     }
     return $mediaCondition;
@@ -134,11 +143,11 @@ function getFileInfo($path)
     $fileInfo = false;
 
     if ($path) {
-        $fileName = \File::name($path);
+        $fileName = File::name($path);
         $name     = substr($fileName, 20);
         $info     = [
-            'name' => $name, 'type' => \File::extension($path),
-            'size' => \Storage::size($path),
+            'name' => $name, 'type' => File::extension($path),
+            'size' => Storage::size($path),
         ];
         return json_encode($info);
     }
@@ -178,7 +187,7 @@ function checkSystemAdmin(): bool
     $connection      = DB::getDefaultConnection();
     $currentDatabase = DB::connection($connection)->getDatabaseName();
 
-    return $currentDatabase == CommonConstant::DATABASE_SYSTEM;
+    return $currentDatabase == Common::DATABASE_SYSTEM;
 }
 
 /**
@@ -285,7 +294,7 @@ function revertSwitchTenantConnection(): bool
     DB::purge('mysql');
     DB::purge('tenant');
     // Set new config by Tenant
-    Config::set('database.connections.tenant.database', CommonConstant::DATABASE_SYSTEM);
+    Config::set('database.connections.tenant.database', Common::DATABASE_SYSTEM);
     DB::connection('tenant')->reconnect();
     DB::setDefaultConnection('tenant');
 
