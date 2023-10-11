@@ -11,4 +11,5 @@ class Common
     const POST_METHOD = 'post';
     const PATCH_METHOD = 'patch';
     const DELETE_METHOD = 'delete';
+    const DATABASE_SYSTEM = 'phone';
 }
