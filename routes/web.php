@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
+    dd(User::all(), env('DB_HOST'));
     return User::all();
 });
 
