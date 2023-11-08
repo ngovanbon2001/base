@@ -1,7 +1,7 @@
 !/bin/sh
 
 #copy env
-cp .env.example .env
+cp .env.production .env
 # install
 composer install --prefer-dist --no-scripts --no-autoloader
 
