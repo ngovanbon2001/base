@@ -19,7 +19,7 @@ use Spatie\Permission\Models\Role;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('count_requests');
+});
 
 Route::get('/test', function () {
     return "AAAAAA";

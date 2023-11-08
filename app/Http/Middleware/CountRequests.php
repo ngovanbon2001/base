@@ -17,7 +17,7 @@ class CountRequests
      */
     public function handle(Request $request, Closure $next)
     {
-        Redis::incr('request_count');
-        return $next($request);
+        // Redis::incr('request_count');
+        // return $next($request);
     }
 }
