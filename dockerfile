@@ -30,6 +30,8 @@ RUN cp .env.example .env
 # Cài đặt các phụ thuộc Composer
 RUN composer install --prefer-dist --no-scripts --no-autoloader
 
+RUN php artisan key:generate
+
 # Tạo lại file autoload
 RUN composer dump-autoload --no-scripts --optimize
 
