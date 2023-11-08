@@ -1,4 +1,4 @@
-#!/bin/sh
+!/bin/sh
 
 #copy env
 cp .env.example .env
