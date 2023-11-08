@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return "AAAAAA";
+    return User::all();
 });
 
 Route::get('test3', function () {
