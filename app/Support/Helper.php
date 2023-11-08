@@ -24,6 +24,36 @@ if (!function_exists('handleImage')) {
     }
 }
 
+if (!function_exists('handleImage')) {
+    function handleImage($fileImage): string
+    {
+        $imageName = "";
+
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $timeNow = Carbon::now()->format('Y-m-d_H-i-s');
+        $path = 'public/images/' . '/' . $currentYear . '/' . $currentMonth;
+        Storage::makeDirectory($path);
+        
+        if (isset($fileImage)) {
+            $imageName = $timeNow . '_' . $fileImage->getClientOriginalName();
+            $pathFile = $fileImage->storeAs($path, $imageName);
+        
+            // Đường dẫn đầy đủ đến ảnh gốc trong storage
+            $imageFullPath = storage_path('app/' . $pathFile);
+        
+            // Resize ảnh với kích thước mới (ví dụ: 200x300)
+            $resizedImage = Image::make($imageFullPath)->fit(200, 300);
+        
+            // Lưu ảnh đã resize lại vào storage
+            $resizedImagePath = $path . '/' . $imageName;
+            $resizedImage->save(storage_path('app/' . $resizedImagePath));
+        }
+        
+        return $imageName ?? null;
+    }
+}
+
 if (!function_exists('test')) {
     function test($fileImage): string
     {
