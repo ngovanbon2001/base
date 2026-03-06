@@ -1,13 +1,16 @@
-!/bin/sh
+set -e
 
-#copy env
-cp .env.production .env
-# install
-composer install --prefer-dist --no-scripts --no-autoloader
+echo ">> Starting Laravel setup..."
 
-# secret
+cp .env.example .env || true
+composer install --no-interaction --prefer-dist --optimize-autoloader
 php artisan key:generate
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan storage:link
 
-php artisan migrate
+echo ">> Laravel is ready!"
 
-composer dump-autoload --no-scripts --optimize
+exec apache2-foreground
+

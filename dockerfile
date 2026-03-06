@@ -1,34 +1,45 @@
-FROM php:8.1.15-apache-buster
+# Chọn PHP base image
+FROM php:8.2-fpm
 
-# Sao chép các tệp vào container
-COPY . /var/www/html
+# Cài extensions cần thiết cho Laravel
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libpq-dev \
+    libonig-dev \
+    libzip-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        mbstring \
+        zip \
+        bcmath \
+        pcntl \
+        xml \
+        gd
 
-# Thiết lập thư mục làm việc mặc định
-WORKDIR /var/www/html
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Cài đặt các gói phụ thuộc
-RUN apt-get update && \
-    apt-get install -y zip unzip libzip-dev && \
-    docker-php-ext-install zip pdo_mysql
+WORKDIR /var/www
 
-# Cài đặt Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY composer.json composer.lock ./
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+COPY . .
+RUN composer dump-autoload --optimize
+RUN php artisan package:discover --ansi
 
-# Set chown
-RUN chown -R www-data:www-data /var/www/html
+COPY . .
 
-# Cấu hình Apache
-ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
-RUN a2ensite 000-default.conf
-RUN a2enmod rewrite
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Sao chép tệp startup.sh vào container
-COPY startup.sh /var/www/html/startup.sh
+EXPOSE 9000
 
-# Thực thi tệp startup.sh
-RUN chmod +x /var/www/html/startup.sh
-RUN /var/www/html/startup.sh
-
-CMD apache2-foreground
+CMD ["php-fpm"]
